@@ -1,0 +1,36 @@
+services:
+  ids:
+    build: ./ids
+    container_name: ids
+    ports:
+      - "12345:12345"
+    networks:
+      - ids_net
+
+  capteur_iomt:
+    build: ./capteur_iomt
+    container_name: capteur_iomt
+    networks:
+      - ids_net
+    depends_on:
+      - ids
+
+  capteur_iotid:
+    build: ./capteur_iotid
+    container_name: capteur_iotid
+    networks:
+      - ids_net
+    depends_on:
+      - ids
+
+  capteur_edge:
+    build: ./capteur_edge
+    container_name: capteur_edge
+    networks:
+      - ids_net
+    depends_on:
+      - ids
+
+networks:
+  ids_net:
+    driver: bridge
